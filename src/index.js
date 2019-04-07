@@ -6,6 +6,9 @@ const reducer = (state = 0, action) => {
     case 'INC':
       return state + 1;
 
+    case 'DEC':
+      return state - 1;
+
     default:
       return state;
   }
@@ -14,9 +17,24 @@ const reducer = (state = 0, action) => {
 
 let store = createStore(reducer);
 
-store.subscribe(() => {
+const update = () => {
   console.log('state: ', store.getState());
-});
 
-store.dispatch({ type: 'INC' });
-store.dispatch({ type: 'INC' });
+  document
+    .getElementById('counter')
+    .innerHTML = store.getState();
+}
+
+store.subscribe(update);
+
+document
+  .getElementById('dec')
+  .addEventListener('click', () => {
+    store.dispatch({ type: 'DEC' });
+  });
+
+document
+  .getElementById('inc')
+  .addEventListener('click', () => {
+    store.dispatch({ type: 'INC' });
+  });
