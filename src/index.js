@@ -1,3 +1,7 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Counter from './counter';
+
 import {
   createStore,
   bindActionCreators,
@@ -17,30 +21,25 @@ const {
   inc,
   dec,
   rnd,
-} = bindActionCreators(actions, dispatch)
+} = bindActionCreators(actions, dispatch);
 
 const update = () => {
   console.log('state: ', store.getState());
 
-  document
-    .getElementById('counter')
-    .innerHTML = store.getState();
-}
+  ReactDOM.render(
+    <Counter
+      counter={store.getState()}
+      inc={inc}
+      dec={dec}
+      rnd={() => {
+        const random = Math.floor(Math.random() * 10);
+        rnd(random);
+      }}
+    />,
+    document.getElementById('root')
+  );
+};
 
 store.subscribe(update);
 
-document
-  .getElementById('dec')
-  .addEventListener('click', dec);
-
-document
-  .getElementById('inc')
-  .addEventListener('click', inc);
-
-document
-  .getElementById('rnd')
-  .addEventListener('click', () => {
-    const payload = Math.floor(Math.random() * 10);
-
-    rnd(payload);
-  });
+update();
