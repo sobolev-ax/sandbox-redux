@@ -1,4 +1,4 @@
-console.log('Hello Redux!');
+import { createStore } from 'redux';
 
 const reducer = (state = 0, action) => {
 
@@ -12,10 +12,11 @@ const reducer = (state = 0, action) => {
 
 }
 
-let state = reducer(undefined, {});
+let store = createStore(reducer);
 
-state = reducer(state, { type: 'INC' });
-console.log('state: ', state);
+store.subscribe(() => {
+  console.log('state: ', store.getState());
+});
 
-state = reducer(state, { type: 'INC' });
-console.log('state: ', state);
+store.dispatch({ type: 'INC' });
+store.dispatch({ type: 'INC' });
