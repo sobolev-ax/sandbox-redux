@@ -18,6 +18,13 @@ const reducer = (state = 0, action) => {
 
 }
 
+/**
+ * Action creators
+ */
+const dec = () => ({ type: 'DEC' });
+const inc = () => ({ type: 'INC' });
+const rnd = (payload) => ({ type: 'RND', payload });
+
 let store = createStore(reducer);
 
 const update = () => {
@@ -33,13 +40,13 @@ store.subscribe(update);
 document
   .getElementById('dec')
   .addEventListener('click', () => {
-    store.dispatch({ type: 'DEC' });
+    store.dispatch(dec());
   });
 
 document
   .getElementById('inc')
   .addEventListener('click', () => {
-    store.dispatch({ type: 'INC' });
+    store.dispatch(inc());
   });
 
 document
@@ -47,8 +54,5 @@ document
   .addEventListener('click', () => {
     const payload = Math.floor(Math.random() * 10);
 
-    store.dispatch({
-      type: 'RND',
-      payload,
-    });
+    store.dispatch(rnd(payload));
   });
